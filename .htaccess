@@ -1,0 +1,23 @@
+#   старт
+    AddDefaultCharset UTF-8 
+    RewriteEngine on
+    RewriteBase /
+    Options -Indexes
+
+#   файлы ошибок
+    ErrorDocument 404 /404.php
+    ErrorDocument 403 /404.php
+
+#   файл .htaccess не существует
+    RewriteCond %{REQUEST_URI} ^/.htaccess$
+    RewriteRule . - [R=404,L,NC]
+
+#   запрет директорий
+    RewriteCond %{REQUEST_URI} ^/@-.*
+    RewriteRule . - [R=404,L,NC]
+
+#   переход на главную страницу
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-l
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /index.php [L,NC]
